@@ -69,11 +69,16 @@ public  class  App  extends  JFrame  implements  ActionListener
 		try  
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection  connection  =  DriverManager.getConnection("jdbc:mysql://localhost:3306/student",  "root",  "Avani@02#ctapct");
-			String query="INSERT INTO st values('"+ NAME +"','"+ CLASS + "','"+ ROLLNO + "','"+ ADDRESS +"','"+ PHONENO +"','"+ GUARDIAN +"')";
-			System.out.println(query);
-			Statement  sta  =  connection.createStatement();
-			int  x  =  sta.executeUpdate(query);
+			Connection  connection  =  DriverManager.getConnection("jdbc:mysql://localhost:3306/student",  "root",  "password");
+			String query = "INSERT INTO st VALUES (?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = connection.prepareStatement(query);
+			stmt.setString(1, NAME);
+			stmt.setString(2, CLASS);
+			stmt.setString(3, ROLLNO);
+			stmt.setString(4, ADDRESS);
+			stmt.setString(5, PHONENO);
+			stmt.setString(6, GUARDIAN);
+			int x = stmt.executeUpdate();
 
 			if  (x ==  0) 
 				JOptionPane.showMessageDialog(b,  "This is already exist");
